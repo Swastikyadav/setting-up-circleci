@@ -29,3 +29,11 @@ This repo is dedicated to setting up circleci and fixing issues if any arises.
     - checkout
     - run: gem install bundler:x
   ```
+
+3. Command not found: bundle-audit (bundle exex bundle-audit check --update)
+  This issue is because of two missing gems in your gemfile. Just add the following two lines in your gemfile `gem 'bundler-audit', require: false` and `gem 'ruby_audit', require: false`. Then run `bundle install`.
+  
+  ```
+  gem 'bundler-audit', require: false
+  gem 'ruby_audit', require: false
+  ```
