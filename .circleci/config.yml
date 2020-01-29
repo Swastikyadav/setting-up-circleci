@@ -6,7 +6,7 @@ jobs:
       # specify the version you desire here
        - image: circleci/ruby:2.6.5-node-browsers
        - image: circleci/postgres:11.2
-    working_directory: ~/wheel
+    working_directory: ~/circleci
     environment:
       TZ: "/usr/share/zoneinfo/America/New_York"
       RAILS_ENV: "test"
@@ -28,9 +28,9 @@ jobs:
       # Enable if using yarn
       - restore_cache:
           keys:
-          - wheel-yarn-deps-{{ .Branch }}-{{ checksum "yarn.lock" }}
-          - wheel-yarn-deps-{{ .Branch }}
-          - wheel-yarn-deps
+          - circleci-yarn-deps-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          - circleci-yarn-deps-{{ .Branch }}
+          - circleci-yarn-deps
 
       - run: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
       # Enable if using yarn
@@ -52,15 +52,15 @@ jobs:
 
       # Store yarn cache: When using Yarn
       - save_cache:
-          key: wheel-yarn-deps-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          key: circleci-yarn-deps-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
             - vendor/node_modules
       - save_cache:
-          key: wheel-yarn-deps-{{ .Branch }}
+          key: circleci-yarn-deps-{{ .Branch }}
           paths:
             - vendor/node_modules
       - save_cache:
-          key: wheel-yarn-deps
+          key: circleci-yarn-deps
           paths:
             - vendor/node_modules
 
